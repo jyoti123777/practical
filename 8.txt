@@ -1,0 +1,136 @@
+Operations.aspx:
+
+<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Operations.aspx.cs" Inherits="AjaxService.Operations" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title>Operations</title>
+    <script src="jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <div>
+            <center><h1>Operation</h1></center>
+            <center>
+                <table>
+                    <tr>
+                        <td>Enter First Number: </td>
+                        <td>
+                            <input type="number" id="textNo1" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Enter First Number:</td>
+                        <td>
+                            <input type="mumber" id="textNo2" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Result: </td>
+                        <td>
+                            <input type="text" id="res" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="button" id="btn1" value="ADD" />
+                        </td>
+                        <td>
+                            <input type="button" id="btn2" value="MULTIPLY" />
+                        </td>
+                    </tr>
+                </table>
+
+            </center>
+        </div>
+    </form>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#btn1").click(function () {
+                var num1 = $("#textNo1").val();
+                var num2 = $("#textNo2").val();
+               
+
+                $.ajax({
+                    url: "Service.svc/Add",
+                    type: "POST",
+                    contentType: "application/json;charset=UTF-8",
+                    dataType: "json",
+                    data: JSON.stringify({ a: num1, b: num2 }),
+                    success: function (data) {
+                        $('#res').val(data.d);
+
+                    },
+                    error: function (err) {
+                        alert(err);
+                    },
+
+                });
+            });
+
+            $("#btn2").click(function () {
+                var num1 = $("#textNo1").val();
+                var num2 = $("#textNo2").val();
+                $.ajax({
+                    url: "Service.svc/Multiply",
+                    type: "POST",
+                    contentType: "application/json;charset=UTF-8",
+                    data: JSON.stringify({ a: num1, b: num2 }),
+
+                    datatype: "json",
+                    success: function (data) {
+                        $('#res').val(data.d);
+                    },
+                    error: function (err) {
+                        alert(err);
+                    },
+
+                });
+            });
+        });
+    </script>
+</body>
+</html>
+
+Service.svc.cs:
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.Serialization;
+using System.ServiceModel;
+using System.ServiceModel.Activation;
+using System.ServiceModel.Web;
+using System.Text;
+
+namespace AjaxService
+{
+    [ServiceContract(Namespace = "")]
+    [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
+    public class Service
+    {
+        // To use HTTP GET, add [WebGet] attribute. (Default ResponseFormat is WebMessageFormat.Json)
+        // To create an operation that returns XML,
+        //     add [WebGet(ResponseFormat=WebMessageFormat.Xml)],
+        //     and include the following line in the operation body:
+        //         WebOperationContext.Current.OutgoingResponse.ContentType = "text/xml";
+        [OperationContract]
+        public double Add(double a, double b)
+        {
+            // Add your operation implementation here
+            return a + b;
+        }
+
+        [OperationContract]
+        public double Multiply(double a, double b)
+        {
+            // Add your operation implementation here
+            return a * b;
+        }
+
+
+        // Add more operations here and mark them with [OperationContract]
+    }
+}
+
