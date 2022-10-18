@@ -1,0 +1,218 @@
+  Server:
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.ciphers;
+
+import javax.jws.WebService;
+import javax.jws.WebMethod;
+import javax.jws.WebParam;
+
+/**
+ *
+ * @author student
+ */
+@WebService(serviceName = "Caeser")
+public class Caeser {
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "encrypt")
+    public String encrypt(@WebParam(name = "plain") String plain, @WebParam(name = "key") int key) {
+        //TODO write your implementation code here:
+        String cipher = "";
+        for(int i = 0; i < plain.length(); i++){
+            cipher += ""+ (char)((int)plain.charAt(i) + key);
+        }
+        return cipher;
+    }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "decrypt")
+    public String decrypt(@WebParam(name = "cipher") String cipher, @WebParam(name = "key") int key) {
+        //TODO write your implementation code here:
+        String plain = "";
+        for(int i = 0; i < cipher.length(); i++){
+            plain += ""+ (char)((int)cipher.charAt(i) - key);
+        }
+        return plain;
+    }
+}
+Client:
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package cipherclient;
+import cipherclient.Caeser;
+import cipherclient.Caeser_Service;
+import java.util.Scanner;
+/**
+ *
+ * @author student
+ */
+public class CipherClient {
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        // TODO code application logic here
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter plain Text: ");
+        String plain = sc.nextLine();
+        int key = 3;
+        String cipher = encrypt(plain, key);
+        System.out.println("Encrypted Message: "+cipher);
+        System.out.println("Decrypted Message: "+decrypt(cipher,key));
+        
+    }
+    
+    public static String encrypt(String plain, int key){
+        Caeser_Service service = new Caeser_Service();
+        Caeser port = service.getCaeserPort();
+        return port.encrypt(plain, key);
+    }
+    
+    public static String decrypt(String cipher, int key){
+        Caeser_Service service = new Caeser_Service();
+        Caeser port = service.getCaeserPort();
+        return port.decrypt(cipher, key);
+    }
+    
+}
+
+________________________________________________________________
+
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.cipher;
+
+import javax.jws.WebService;
+import javax.jws.WebMethod;
+import javax.jws.WebParam;
+import javax.crypto.Cipher;
+import java.util.Base64;
+import javax.crypto.SecretKey;
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.DESKeySpec;
+
+/**
+ *
+ * @author student
+ */
+@WebService(serviceName = "DES")
+public class DES {
+
+    private static Cipher encryptans;
+    private static Cipher decryptans;
+    private static String key;
+    SecretKey desKey;
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "encrypt")
+    public String encrypt(@WebParam(name = "plain") String plain) {
+        try{
+            //key
+            key="squirel123";
+            DESKeySpec dks = new DESKeySpec(key.getBytes());
+
+            //Key factories are used to convert keys (opaque cryptographic keys of type Key) 
+            //into key specifications (transparent representations of the underlying key material),
+            SecretKeyFactory skf = SecretKeyFactory.getInstance("DES");
+            desKey = skf.generateSecret(dks);
+            encryptans=Cipher.getInstance("Des");
+            
+            encryptans.init(Cipher.ENCRYPT_MODE,desKey);
+            
+            byte[]utf8=plain.getBytes("UTF8");
+            byte[]enc=encryptans.doFinal(utf8);
+            
+            String encodedString = Base64.getEncoder().encodeToString(enc);
+            
+            return encodedString;          
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        return null;
+
+    }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "decrypt")
+    public String decrypt(@WebParam(name = "cipher") String cipher) {
+        try{
+            decryptans=Cipher.getInstance("Des");
+            decryptans.init(Cipher.DECRYPT_MODE,desKey);
+            byte[] dec = Base64.getDecoder().decode(cipher.getBytes());
+           
+            byte[] utf8=decryptans.doFinal(dec);
+            return new String(utf8,"UTF8");          
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+}
+Client:
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package cipherclient;
+
+import java.util.Scanner;
+import cipherclient.DES;
+import cipherclient.DES_Service;
+/**
+ *
+ * @author student
+ */
+public class CipherClient {
+
+    /**
+     * @param args the command line arguments
+     */
+        public static void main(String[] args) {
+        // TODO code application logic here
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter plain Text: ");
+        String plain = sc.nextLine();
+        int key = 3;
+        String cipher = encrypt(plain);
+        System.out.println("Encrypted Message: "+cipher);
+        System.out.println("Decrypted Message: "+decrypt(cipher));
+        
+    }
+    
+    public static String encrypt(String plain){
+        DES_Service service = new DES_Service();
+        DES port = service.getDESPort();
+        return port.encrypt(plain);
+    }
+    
+    public static String decrypt(String cipher){
+        DES_Service service = new DES_Service();
+        DES port = service.getDESPort();
+        return port.decrypt(cipher);
+    }
+
+    
+}
