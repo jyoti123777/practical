@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+<body>
+ 
+<div ng-app="">
+ 
+<font size ="10" color="dark"> <p>Input something in the input box:</p> </font>
+<font size="5"> <p>Name: <input type="text" ng-model="name"></p></font>
+<font size="5"><p ng-bind="name"></p></font>
+ 
+</div>
+ 
+</body>
+</html>
+________________________________
+
+<!DOCTYPE html>
+<html>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+<body>
+ 
+<h1><font color="red"><p>Trying to change the names.</p></h1></font>
+ 
+<div ng-app="myApp" ng-controller="myCtrl">
+ 
+<h3>First Name: <input type="text" ng-model="firstName"><br></h3>
+<h3>Last Name: <input type="text" ng-model="lastName"><br></h3>
+ 
+<font color= "purple" size="5"> Full Name: {{firstName + " " + lastName}} </font>
+ 
+</div>
+ 
+<script>
+var app = angular.module('myApp', []);
+app.controller('myCtrl', function($scope) {
+    $scope.firstName= "Jyoti";
+    $scope.lastName= "Ghosh";
+});
+</script>
+ 
+</body>
+</html>
+ 
+
+_______________________
+
+<!DOCTYPE html>
+<html>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+<body>
+ 
+<div ng-app="myApp" ng-controller="myCtrl">
+<h2>Name: <input ng-model="name" > </h2>
+<h1>You entered: {{name}}</h1>
+</div>
+ 
+<script>
+var app = angular.module('myApp', []);
+app.controller('myCtrl', function($scope) {
+    $scope.name = "Jyoti Ghosh";
+});
+</script>
+ 
+<font size="5"><p>Change the name inside the input field, <br/>
+    and you will see the name in the header changes accordingly.</p></font>
+ 
+</body>
+</html>
+ 
