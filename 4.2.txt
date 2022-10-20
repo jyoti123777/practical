@@ -1,0 +1,86 @@
+<html>
+<head>
+<style>
+
+table,th,td
+{
+border:1px solid grey;
+border-collapse:collapse;
+padding:5px;
+}
+
+table tr:nth-child(even)
+{
+background-color :#f2f2f2;
+} 
+
+table tr:nth-child(odd)
+{
+background-color : #ffffff;
+} 
+
+</style>
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js">
+</script>
+</head>
+
+<body>
+<center>
+<h2>This page shows use of AngularJS Tables</h2>
+<hr color="red"></hr>
+
+<div ng-app="tableApp" ng-controller="tableController">
+<table border="0">
+<tr>
+<td>Enter first name: </td>
+<td><input type="text" ng-model="fname"</td>
+</tr>
+
+<tr>
+<td>Enter last name: </td>
+<td><input type="text" ng-model="lname"></td>
+</tr>
+
+<tr>
+<td>Name: </td>
+<td><b>{{fname+ " " +lname}}</b></td>
+</tr>
+
+<tr>
+<td>Subject: </td>
+<td>
+<table>
+<tr>
+<th><b>Sub</b></th>
+<th><b>Marks</b></th>
+</tr>
+
+<tr ng-repeat="x in subjects">
+<td>{{x.subject}}</td>
+<td>{{x.marks}}</td>
+</tr>
+</table>
+</td>
+</tr>
+
+</table>
+
+<script>
+var app=angular.module("tableApp",[]);
+app.controller("tableController",function($scope)
+{
+$scope.subjects = [
+{ subject : 'Physics' , marks : 78 },
+{ subject : 'Chemistry' , marks : 86 },
+{ subject : 'Maths' , marks : 90 },
+{ subject : 'Economics' , marks : 65 },
+{ subject : 'Biology' , marks : 74 }
+];
+});
+</script>
+</div>
+
+</center>
+</body>
+</html>

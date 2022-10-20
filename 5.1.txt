@@ -1,0 +1,43 @@
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js">
+</script>
+</head>
+
+<body>
+<center>
+
+<h2><b>Change selection to display name change</b></h2>
+<hr color="red"></hr>
+
+<div ng-app="changeOne" ng-controller="changeControl">
+
+<p><b>Select a car</b></p>
+
+<select ng-model="carChosen" ng-options=" x.model for x in cars ">
+</select>
+
+<h2>You Selected : <b><i>{{ carChosen.model }}</i></b></h2>
+<p>Its Color : <b>{{ carChosen.color }}</b></p>
+
+</div>
+
+<script>
+var app=angular.module('changeOne', [ ]);
+app.controller("changeControl",function($scope)
+{
+$scope.cars = [
+{model : 'Maruti Suzuki Desire', color : 'Blue'},
+{model : 'Hyundai Santro', color : 'Beige'},
+{model : 'Skoda Rapid' , color : 'Silver'},
+{model : 'MG Hector Bolt' , color : 'Black'},
+{model : 'Porsche Boxster' , color : 'Red'},
+{model : 'Kia Wild' , color : 'Pitch Black'}
+];
+});
+</script>
+
+<p><b>The directive ng-options is used to create a dropdown list</b></p>
+</center>
+</body>
+</html>

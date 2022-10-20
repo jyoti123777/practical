@@ -1,0 +1,29 @@
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js">
+</script>
+</head>
+<body>
+<center>
+
+<h2>This program converts first name to uppercase and <br/>
+last name to lower case and price to currency value</h2>
+
+<div ng-app="myApp" ng-controller="myctrl">
+<h2><p>First Name is <b>{{ fname | uppercase }}</b></p>
+<p>Last Name is <b>{{ lname | lowercase }}</b></p>
+<p>Price is <b><i>{{ price | currency}}</i></b></p></h2>
+</div>
+<script>
+var app=angular.module('myApp',[]);
+app.controller('myctrl',function($scope)
+{
+$scope.fname = "Jyoti";
+$scope.lname = "Ghosh";
+$scope.price = 5000;
+}
+);
+</script>
+</center>
+</body>
+</html>

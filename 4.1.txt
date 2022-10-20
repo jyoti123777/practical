@@ -1,0 +1,28 @@
+
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js">
+</script>
+</head>
+
+<body>
+<center>
+<p>This program shows the location url of this page</p>
+<h3><b>This program uses $location service to get absolute url of page</b></h3>
+<hr color="red"></hr>
+
+<div ng-app="serviceApp" ng-controller="serviceController">
+<h3><b>The url of this page is</b></h3><br/>
+<h2>{{ myUrl }}</h2>
+<script>
+var app=angular.module("serviceApp",[]);
+app.controller("serviceController",function($scope,$location)
+{
+$scope.myUrl = $location.absUrl();
+});
+</script>
+
+</div>
+</center>
+</body>
+</html>

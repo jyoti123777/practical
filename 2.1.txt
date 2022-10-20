@@ -1,0 +1,36 @@
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js">
+</script>
+</head>
+
+<body>
+<center>
+
+<div ng-app="app2"  ng-controller="myctrl">
+<h1 ng-click="change()">{{fname}}</h1>
+
+<br/>
+
+<h4>Click on the header name above to activate change() function <br/> 
+change() will change header to another name</h4>
+
+<script>
+
+var app=angular.module('app2', [ ]);
+app.controller('myctrl',function($scope)
+{
+$scope.fname="Jyoti Ghosh";
+
+$scope.change=function()
+{
+$scope.fname="Jyoti Panja";
+
+}
+}
+);
+</script>
+
+</center>
+</body>
+</html>

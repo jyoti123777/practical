@@ -1,0 +1,34 @@
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js">
+</script>
+</head>
+
+<body>
+<h3>Select a Car :</h3>
+
+<div ng-app="changeApp" ng-controller="changeController">
+<select ng-model="selectedCar" ng-options="x for (x,y) in cars">
+</select>
+
+<h2>You selected : <b>{{ selectedCar.brand }}</b></h2>
+<p>The Model is  :<b>{{ selectedCar.model }}</b></p>
+<p>The Color is :<b>{{ selectedCar.color }}</b></p>
+
+</div>
+
+<script>
+var app=angular.module("changeApp",[]);
+app.controller("changeController",function($scope)
+{
+$scope.cars = 
+{
+CAR_1 : { brand : "Porsche", model : "Boxster", color : "Red"},
+CAR_2 : { brand : "Kia" , model : "Wild" , color : "Black"},
+CAR_3 : { brand : "MG Hector" , model : "Bolt" , color : "White"}
+};
+});
+</script>
+
+</body>
+</html>

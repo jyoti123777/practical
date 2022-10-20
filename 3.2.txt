@@ -1,0 +1,73 @@
+<html>
+<head>
+
+<style>
+
+table
+{
+font-size : 30px;
+}
+
+</style>
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js">
+
+</script>
+</head>
+
+<body>
+<center>
+<h1><font color="purple">Click on any one header to sort accordingly</font></h1>
+
+<hr color="green"></hr>
+
+<div ng-app="sortNames" ng-controller="sortController">
+
+<table border="1" width=40% text-align="center">
+<center>
+<tr>
+<th ng-click="orderByThis('name')">Name</th>
+<th ng-click="orderByThis('country')">Country</th>
+</tr>
+
+<tr ng-repeat="x in names | orderBy : Myorder">
+<td> {{ x.name }} </td>
+<td> {{ x.country }} </td>
+</tr>
+<center>
+</table>
+
+<script>
+
+var app = angular.module("sortNames", []);
+app.controller("sortController", function($scope)
+{
+$scope.names=[
+
+{name:'Jyoti', country:'India'},
+{name:'Bhumika', country:'Yemen'},
+{name:'Sagar', country:'Canada'},
+{name:'Parth', country:'France'},
+{name:'Sumeet', country:'India'},
+{name:'Upashana', country:'Vatican'},
+{name:'Rhea', country:'Chicago'},
+{name:'Harshal', country:'China'},
+{name:'Tejas', country:'Rome'},
+{name:'Chahek', country:'Afghanistan'},
+{name:'Shivam', country:'Africa'},
+];
+
+$scope.orderByThis = function(x)
+{
+$scope.Myorder = x;
+}
+}
+);
+
+</script>
+</div>
+
+</center>
+</body>
+</html>
+
